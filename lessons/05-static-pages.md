@@ -52,7 +52,7 @@ export default async function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
           <div className="text-center text-sm text-gray-500 dark:text-gray-400">
             <p>
-              © <Timestamp /> Mode. Built for Next.js Fundamentals.
+              © <Timestamp /> HashTrack. Built for Next.js Fundamentals.
             </p>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default async function MarketingLayout({
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-8">
             <Link href="/" className="text-xl font-bold">
-              Mode
+              HashTrack
             </Link>
             <nav className="hidden md:flex gap-6">
               <Link
@@ -122,7 +122,7 @@ export default async function MarketingLayout({
         <div className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
             <div>
-              <h3 className="text-lg font-semibold mb-4">Mode</h3>
+              <h3 className="text-lg font-semibold mb-4">HashTrack</h3>
               <p className="text-sm text-gray-600">
                 A modern project management tool built with Next.js.
               </p>
@@ -195,7 +195,7 @@ export default async function MarketingLayout({
           </div>
           <div className="mt-8 border-t pt-8 text-center">
             <p className="text-sm text-gray-600">
-              &copy; <Timestamp /> Mode. All rights reserved.
+              &copy; <Timestamp /> HashTrack. All rights reserved.
             </p>
           </div>
         </div>
@@ -575,7 +575,7 @@ export default function SignUpPage() {
     <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-50 dark:bg-[#121212]">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h1 className="text-center text-3xl font-extrabold text-gray-900 dark:text-white">
-          Mode
+          HashTrack
         </h1>
         <h2 className="mt-2 text-center text-2xl font-bold text-gray-900 dark:text-white">
           Create a new account
@@ -612,7 +612,7 @@ export default function SignInPage() {
     <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-50 dark:bg-[#121212]">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h1 className="text-center text-3xl font-extrabold text-gray-900 dark:text-white">
-          Mode
+          HashTrack
         </h1>
         <h2 className="mt-2 text-center text-2xl font-bold text-gray-900 dark:text-white">
           Sign in to your account
