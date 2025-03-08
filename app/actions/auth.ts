@@ -10,6 +10,7 @@ import {
 import { getUserByEmail } from '@/lib/dal'
 import { mockDelay } from '@/lib/utils'
 import { redirect } from 'next/navigation'
+import { create } from 'domain'
 
 // Define Zod schema for signin validation
 const SignInSchema = z.object({
@@ -37,4 +38,101 @@ export type ActionResponse = {
   message: string
   errors?: Record<string, string[]>
   error?: string
+}
+
+export const signIn = async (formData: FormData): Promise<ActionResponse> => {
+  try {
+    const data = {
+      email: formData.get('email') as string,
+      password: formData.get('password') as string,
+    }
+
+    const validationResult = SignInSchema.safeParse(data)
+
+    if (!validationResult.success) {
+      return {
+        success: false,
+        message: 'Invalid form data',
+        errors: validationResult.error.flatten().fieldErrors,
+      }
+    }
+    const user = await getUserByEmail(data.email)
+    if (!user) {
+      return {
+        success: false,
+        message: 'Invalid email or password',
+        errors: { email: ['Invalid email or password'] },
+      }
+    }
+
+    const isPasswordValid = await verifyPassword(data.password, user.password)
+    if (!isPasswordValid) {
+      return {
+        success: false,
+        message: 'Invalid email or password',
+        errors: { email: ['Invalid email or password'] },
+      }
+    }
+
+    await createSession(user.id)
+
+    return { success: true, message: 'Signed in successfully' }
+  } catch (error) {
+    return {
+      success: false,
+      error: (error as Error).message || 'An error occurred',
+      message: (error as Error).message || 'An error occurred',
+    }
+  }
+}
+
+export const signUp = async (formData: FormData): Promise<ActionResponse> => {
+  try {
+    const data = {
+      email: formData.get('email') as string,
+      password: formData.get('password') as string,
+      confirmPassword: formData.get('confirmPassword') as string,
+    }
+
+    const validationResult = SignUpSchema.safeParse(data)
+
+    if (!validationResult.success) {
+      return {
+        success: false,
+        message: 'Invalid form data',
+        errors: validationResult.error.flatten().fieldErrors,
+      }
+    }
+
+    const user = await getUserByEmail(data.email)
+    if (user) {
+      return {
+        success: false,
+        message: 'Email already in use',
+        errors: { email: ['Email already in use'] },
+      }
+    }
+
+    await createUser(data.email, data.password)
+
+    return { success: true, message: 'Account created successfully' }
+  } catch (error) {
+    return {
+      success: false,
+      error: (error as Error).message || 'An error occurred',
+      message: (error as Error).message || 'An error occurred',
+    }
+  }
+}
+
+export async function signOut(): Promise<void> {
+  try {
+    await mockDelay(300)
+    await deleteSession()
+  } catch (error) {
+    console.error('Sign out error:', error)
+    throw new Error('Failed to sign out')
+  } finally {
+    redirect('/signin')
+  }
 }
